@@ -35,12 +35,11 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.ItemFrame;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.inventivetalent.animatedframes.clickable.CursorPosition;
@@ -58,10 +57,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+
+import static org.inventivetalent.animatedframes.AnimatedFramesPlugin.ShowImgName;
+
 
 public class Commands {
 
@@ -110,6 +109,7 @@ public class Commands {
 			sender.sendMessage("§eType §a/help <Command> §efor more information.");
 		}
 	}
+
 
 	@Command(name = "framecreate",
 			 aliases = {
@@ -162,6 +162,16 @@ public class Commands {
 					Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
 						@Override
 						public void run() {
+							Player player = (Player) sender;
+							World world = (World) firstFrame.getWorld();
+							Location location = (Location) firstFrame.getLocation();
+							ArmorStand hologram = (ArmorStand) world.spawnEntity(location, EntityType.ARMOR_STAND);
+							hologram.setVisible(false);
+							hologram.setCustomNameVisible(false);
+							hologram.setCustomName(ChatColor.LIGHT_PURPLE + name);
+							Collection<Entity> nearbyEntities = location.getWorld().getNearbyEntities(location, 8, 8, 8);
+
+
 							sender.sendMessage(MESSAGE_LOADER.getMessage("create.setup.second", "create.setup.second"));
 							plugin.interactListener.listenForEntityInteract(sender, new Callback<PlayerInteractEntityEvent>() {
 								@Override

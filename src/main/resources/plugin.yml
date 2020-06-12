@@ -4,3 +4,10 @@ author: inventivetalent
 version: ${project.version}
 
 softdepend: [PacketListenerApi, MapManager]
+commands:
+  replace:
+    description: replace an image on command!
+    usage: /replace <nameOFimgYOUwantTOreplace> <newIMGurl>
+  toggleview:
+    desccription: see the image name!
+    usage: /toggleview

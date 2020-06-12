@@ -44,6 +44,8 @@ import java.util.concurrent.Executors;
 
 public class AnimatedFramesPlugin extends JavaPlugin {
 
+
+	public static boolean ShowImgName = false;
 	public FrameManager frameManager;
 	public Executor     frameExecutor;
 
@@ -83,6 +85,8 @@ public class AnimatedFramesPlugin extends JavaPlugin {
 		frameManager = new FrameManager(this);
 		frameExecutor = Executors.newCachedThreadPool();
 
+		getCommand("ToggleView").setExecutor(new ToggleViewEntityCommand());
+		getCommand("Replace").setExecutor(new ReplaceCommand(this));
 		Bukkit.getPluginManager().registerEvents(interactListener = new InteractListener(this), this);
 		Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
 		Bukkit.getPluginManager().registerEvents(new ClickListener(this), this);
